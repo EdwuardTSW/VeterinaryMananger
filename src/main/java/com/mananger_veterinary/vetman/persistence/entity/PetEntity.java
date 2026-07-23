@@ -1,15 +1,33 @@
-package com.mananger_veterinary.vetman.domain;
+package com.mananger_veterinary.vetman.persistence.entity;
 
-public class Pet {
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "pets")
+public class PetEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
-    private String name;
-    private String species;
-    private String breed;
-    private Integer age;
-    private Owner owner;
 
-    public Pet() {
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "species", nullable = false)
+    private String species;
+
+    @Column(name = "breed")
+    private String breed;
+
+    @Column(name = "age")
+    private Integer age;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    private OwnerEntity owner;
+
+    public PetEntity() {
     }
 
     public Integer getId() {
@@ -52,11 +70,11 @@ public class Pet {
         this.age = age;
     }
 
-    public Owner getOwner() {
+    public OwnerEntity getOwner() {
         return owner;
     }
 
-    public void setOwner(Owner owner) {
+    public void setOwner(OwnerEntity owner) {
         this.owner = owner;
     }
 }

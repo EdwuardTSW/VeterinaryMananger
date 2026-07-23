@@ -1,15 +1,29 @@
-package com.mananger_veterinary.vetman.domain;
+package com.mananger_veterinary.vetman.persistence.entity;
+
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-public class Appointment {
+@Entity
+@Table(name = "appointments")
+public class AppointmentEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
-    private LocalDateTime appointmentDate;
-    private String reason;
-    private Pet pet;
 
-    public Appointment() {
+    @Column(name = "appointment_date", nullable = false)
+    private LocalDateTime appointmentDate;
+
+    @Column(name = "reason", nullable = false)
+    private String reason;
+
+    @ManyToOne
+    @JoinColumn(name = "pet_id", nullable = false)
+    private PetEntity pet;
+
+    public AppointmentEntity() {
     }
 
     public Integer getId() {
@@ -36,11 +50,11 @@ public class Appointment {
         this.reason = reason;
     }
 
-    public Pet getPet() {
+    public PetEntity getPet() {
         return pet;
     }
 
-    public void setPet(Pet pet) {
+    public void setPet(PetEntity pet) {
         this.pet = pet;
     }
 }

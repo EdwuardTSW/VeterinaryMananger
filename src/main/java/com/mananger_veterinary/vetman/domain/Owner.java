@@ -1,29 +1,11 @@
 package com.mananger_veterinary.vetman.domain;
 
-import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-
-@Entity
-@Table(name = "owners")
 public class Owner {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
-
-    @Column(name = "name", nullable = false)
     private String name;
-
-    @Column(name = "phone", nullable = false)
     private String phone;
-
-    @Column(name = "email")
     private String email;
-
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Pet> pets = new ArrayList<>();
 
     public Owner() {
     }
@@ -58,13 +40,5 @@ public class Owner {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<Pet> getPets() {
-        return pets;
-    }
-
-    public void setPets(List<Pet> pets) {
-        this.pets = pets;
     }
 }

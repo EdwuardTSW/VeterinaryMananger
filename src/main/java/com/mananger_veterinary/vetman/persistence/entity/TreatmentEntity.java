@@ -1,15 +1,29 @@
-package com.mananger_veterinary.vetman.domain;
+package com.mananger_veterinary.vetman.persistence.entity;
+
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
-public class Treatment {
+@Entity
+@Table(name = "treatments")
+public class TreatmentEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
-    private String description;
-    private BigDecimal cost;
-    private Appointment appointment;
 
-    public Treatment() {
+    @Column(name = "description", nullable = false)
+    private String description;
+
+    @Column(name = "cost", nullable = false, precision = 10, scale = 2)
+    private BigDecimal cost;
+
+    @ManyToOne
+    @JoinColumn(name = "appointment_id", nullable = false)
+    private AppointmentEntity appointment;
+
+    public TreatmentEntity() {
     }
 
     public Integer getId() {
@@ -36,11 +50,11 @@ public class Treatment {
         this.cost = cost;
     }
 
-    public Appointment getAppointment() {
+    public AppointmentEntity getAppointment() {
         return appointment;
     }
 
-    public void setAppointment(Appointment appointment) {
+    public void setAppointment(AppointmentEntity appointment) {
         this.appointment = appointment;
     }
 }
