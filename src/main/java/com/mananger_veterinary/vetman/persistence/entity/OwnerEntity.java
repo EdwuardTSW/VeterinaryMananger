@@ -22,6 +22,9 @@ public class OwnerEntity {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<PetEntity> pets = new ArrayList<>();
 
@@ -58,6 +61,7 @@ public class OwnerEntity {
         this.phone = phone;
     }
 
+
     public String getEmail() {
 
         return email;
@@ -66,6 +70,14 @@ public class OwnerEntity {
     public void setEmail(String email) {
 
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public List<PetEntity> getPets() {

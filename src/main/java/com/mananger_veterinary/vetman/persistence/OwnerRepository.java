@@ -38,6 +38,12 @@ public class OwnerRepository implements com.mananger_veterinary.vetman.domain.re
     }
 
     @Override
+    public Optional<Owner> findByEmail(String email) {
+        return ownerCrudRepository.findByEmailIgnoreCase(email)
+                .map(ownerMapper::toDomain);
+    }
+
+    @Override
     public List<Owner> findByNameContaining(String name) {
         return ownerCrudRepository.findByNameContainingIgnoreCase(name)
                 .stream()

@@ -11,6 +11,8 @@ public interface OwnerRepository {
 
     Optional<Owner> findById(Integer id);
 
+    Optional<Owner> findByEmail(String email);
+
     List<Owner> findByNameContaining(String name);
 
     Owner save(Owner owner);
