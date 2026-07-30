@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.mananger_veterinary.vetman.domain.exception.DuplicatePetException;
 
 import java.util.List;
 
@@ -80,36 +81,42 @@ public class PetController {
     @PostMapping
     @Operation(
             summary = "Registrar una mascota",
-            description = "",
+            description = "Crea una mascota y la relaciona con un dueño existente.",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     required = true,
                     content = @Content(
                             examples = @ExampleObject(
                                     name = "Nueva mascota",
                                     value = """
-                                            {
-                                              "name": "Max",
-                                              "species": "Perro",
-                                              "breed": "Labrador",
-                                              "age": 3,
-                                              "owner": {
-                                                "id": 5
-                                              }
-                                            }
-                                            """
+                                        {
+                                          "name": "Max",
+                                          "species": "Perro",
+                                          "breed": "Labrador",
+                                          "age": 3,
+                                          "owner": {
+                                            "id": 5
+                                          }
+                                        }
+                                        """
                             )
                     )
             )
     )
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Mascota creada correctamente"),
-            @ApiResponse(responseCode = "400", description = "Datos de la mascota inválidos"),
-            @ApiResponse(responseCode = "404", description = "Dueño no encontrado")
+            @ApiResponse(responseCode = "400", description = "Datos inválidos o dueño inexistente"),
+            @ApiResponse(responseCode = "409", description = "El dueño ya tiene una mascota con ese nombre")
     })
     public ResponseEntity<Pet> save(@RequestBody Pet pet) {
-        Pet savedPet = petService.save(pet);
+        try {
+            Pet savedPet = petService.save(pet);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedPet);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedPet);
+        } catch (DuplicatePetException exception) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        } catch (IllegalArgumentException exception) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/{id}")

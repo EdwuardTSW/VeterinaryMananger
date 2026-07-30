@@ -8,4 +8,6 @@ import java.util.List;
 public interface PetCrudRepository extends CrudRepository<PetEntity, Integer> {
 
     List<PetEntity> findByNameContainingIgnoreCase(String name);
+
+    boolean existsByOwner_IdAndNameIgnoreCase(Integer ownerId, String name);
 }

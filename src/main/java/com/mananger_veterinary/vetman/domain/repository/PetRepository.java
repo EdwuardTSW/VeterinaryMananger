@@ -13,6 +13,8 @@ public interface PetRepository {
 
     List<Pet> findByNameContaining(String name);
 
+    boolean existsByOwnerIdAndName(Integer ownerId, String name);
+
     Pet save(Pet pet);
 
     void deleteById(Integer id);

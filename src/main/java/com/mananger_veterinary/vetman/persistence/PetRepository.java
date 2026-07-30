@@ -46,6 +46,11 @@ public class PetRepository implements com.mananger_veterinary.vetman.domain.repo
     }
 
     @Override
+    public boolean existsByOwnerIdAndName(Integer ownerId, String name) {
+        return petCrudRepository.existsByOwner_IdAndNameIgnoreCase(ownerId, name);
+    }
+
+    @Override
     public Pet save(Pet pet) {
         PetEntity entity = petMapper.toEntity(pet);
         PetEntity savedEntity = petCrudRepository.save(entity);
