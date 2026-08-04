@@ -1,5 +1,5 @@
 package com.mananger_veterinary.vetman.domain;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Owner {
 
@@ -44,7 +44,7 @@ public class Owner {
         this.email = email;
     }
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public String getPassword() {
         return password;
     }

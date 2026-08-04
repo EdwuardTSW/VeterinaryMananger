@@ -39,6 +39,13 @@ public class JwtUtil {
             extractClaims(token);
             return true;
         } catch (Exception exception) {
+            System.out.println(
+                    "JWT validation failed: "
+                            + exception.getClass().getSimpleName()
+                            + " - "
+                            + exception.getMessage()
+            );
+
             return false;
         }
     }
