@@ -16,6 +16,7 @@ logs/
 application-local.yml
 application-local.properties
 *.properties
+!gradle/wrapper/gradle-wrapper.properties
 
 ### STS ###
 .apt_generated
